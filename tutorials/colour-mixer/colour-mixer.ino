@@ -6,13 +6,15 @@ const int redSensorPin = A0;
 const int greenSensorPin = A1;
 const int blueSensorPin = A2;
 
-int redValue = 0;
-int greenValue = 0;
-int blueValue = 0;
+int redValue = 255;
+int greenValue = 204;
+int blueValue = 229;
 
+/*
 int redSensorValue = 0;
 int greenSensorValue = 0;
 int blueSensorValue = 0;
+*/
 
 void setup() {
   Serial.begin(9600);
@@ -20,32 +22,31 @@ void setup() {
   pinMode(greenLEDPin, OUTPUT);
   pinMode(redLEDPin, OUTPUT);
   pinMode(blueLEDPin, OUTPUT);
-
-  Serial.print("Setup Finished");
 }
 
 void loop() {
-  Serial.print("Loop...\n");
-  
-  redSensorValue = analogRead(redSensorPin);
-  delay(5);
-  greenSensorValue = analogRead(greenSensorPin);
-  delay(5);
-  blueSensorValue = analogRead(blueSensorPin);
-  delay(5);
+  setColor(255, 0, 0);  // red
+  delay(1000);
+  setColor(0, 255, 0);  // green
+  delay(1000);
+  setColor(0, 0, 255);  // blue
+  delay(1000);
+  setColor(255, 255, 0);// yellow
+  delay(1000);  
+  setColor(80, 0, 80);  // purple
+  delay(1000);
+  setColor(0, 255, 255);// aqua
+  delay(1000);
+}
 
-  Serial.print("Sensor Values: \t Red: ");
-  Serial.print(redSensorValue);
-  Serial.print("\t Green: ");
-  Serial.print(greenSensorValue);
-  Serial.print("\t Blue: ");
-  Serial.print(blueSensorValue);
-
-  redValue = redSensorValue / 4;
-  greenValue = greenSensorValue / 4;
-  blueValue = blueSensorValue / 4;
-
-  analogWrite(redLEDPin, redValue);
-  analogWrite(greenLEDPin, greenValue);
-  analogWrite(blueLEDPin, blueValue);
+void setColor(int red, int green, int blue)
+{
+  #ifdef COMMON_ANODE
+    red = 255 - red;
+    green = 255 - green;
+    blue = 255 - blue;
+  #endif
+  analogWrite(redLEDPin, red);
+  analogWrite(greenLEDPin, green);
+  analogWrite(blueLEDPin, blue);  
 }
